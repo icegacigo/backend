@@ -107,6 +107,43 @@ app.post('/contact', async (req, res) => {
   }
 });
 
+app.post('/subscribe', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    await sendAutoReply(email);
+
+    res.status(200).json({ message: 'Subscription successful' });
+  } catch (error) {
+    console.error('Error handling subscription:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+async function sendAutoReply(email) {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'nattamon.tmc@gmail.com',
+        pass: 'ruyoizdhduhcwzau',
+      },
+    });
+
+    const mailOptions = {
+      from: 'secretclinic@gmail.com',
+      to: email,
+      subject: 'Thank you for subscribing!',
+      text: 'Thank you for subscribing to our newsletter. We appreciate your interest!',
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Auto-reply email sent:', info.response);
+  } catch (error) {
+    console.error('Error sending auto-reply email:', error);
+  }
+}
+
 
 
 app.listen(port, () => {
