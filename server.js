@@ -110,9 +110,7 @@ app.post('/contact', async (req, res) => {
 app.post('/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
-
     await sendAutoReply(email);
-
     res.status(200).json({ message: 'Subscription successful' });
   } catch (error) {
     console.error('Error handling subscription:', error);
@@ -131,7 +129,7 @@ async function sendAutoReply(email) {
     });
 
     const mailOptions = {
-      from: 'secretclinic@gmail.com',
+      from: 'noreply@example.com',
       to: email,
       subject: 'Thank you for subscribing!',
       text: 'Thank you for subscribing to our newsletter. We appreciate your interest!',
