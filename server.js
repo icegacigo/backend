@@ -81,14 +81,14 @@ app.post('/contact', async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'nattamon.tmc@gmail.com',
-      pass: 'ruyoizdhduhcwzau',
+      user: 'secretclinicbu@gmail.com',
+      pass: 'hibeqilrstoeemxp',
     },
   });
 
   const mailOptions = {
     from: email,
-    to: 'nattamon.tmc@gmail.com',
+    to: 'secretclinicbu@gmail.com',
     subject: 'Contact Support',
     text: `
       Name: ${firstname} ${lastname}
@@ -123,13 +123,13 @@ async function sendAutoReply(email) {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'nattamon.tmc@gmail.com',
-        pass: 'ruyoizdhduhcwzau',
+        user: 'secretclinicbu@gmail.com',
+        pass: 'hibeqilrstoeemxp',
       },
     });
 
     const mailOptions = {
-      from: 'noreply@example.com',
+      from: 'secretclinicbu@gmail.com',
       to: email,
       subject: 'Thank you for subscribing!',
       text: 'Thank you for subscribing to our newsletter. We appreciate your interest!',
