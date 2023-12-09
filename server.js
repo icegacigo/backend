@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const nodemailer = require('nodemailer');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -63,6 +64,7 @@ app.post('/appointments', async (req, res) => {
 
     const result = await newAppointment.save();
 
+    console.log(result)
     res.status(201).json({ message: 'Appointment created successfully' });
 
   } catch (error) {
@@ -72,6 +74,39 @@ app.post('/appointments', async (req, res) => {
 });
 
 app.post('/chat', getChatCompletion);
+
+app.post('/contact', async (req, res) => {
+  const { firstname, lastname, email, phoneNumber, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nattamon.tmc@gmail.com',
+      pass: 'ruyoizdhduhcwzau',
+    },
+  });
+
+  const mailOptions = {
+    from: email,
+    to: 'nattamon.tmc@gmail.com',
+    subject: 'Contact Support',
+    text: `
+      Name: ${firstname} ${lastname}
+      Email: ${email}
+      Phone Number: ${phoneNumber}
+      Message: ${message}
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).send('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 app.listen(port, () => {
